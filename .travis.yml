@@ -1,6 +1,6 @@
 language: python
 python:
-  - '2.7'
+- '2.7'
 install: pip install -r requirements.txt
 script: chalice deploy
 notifications:
@@ -8,6 +8,10 @@ notifications:
     on_success: always
     on_failure: change
     template:
-      - "%{build_url}"
-      - "%{commit_message}"
-      - 'Change view: %{compare_url}'
+    - "%{build_url}"
+    - "%{commit_message}"
+    - 'Change view: %{compare_url}'
+    rooms:
+      secure: Qtd4t342dwowjEsyypGf+DZdoaJEwGirtSBoGQgWEgB/MV4Ex9Rf2UaIeWD18Gd/Pd3dYpu08fcJ5E3ALtR7gmCcmz8GVupkTCGFd7w1cqESNkiJEaDlli1j8wDGGuU1bROuMts2hyj30XF4Y6rqnAth/Up6HMAYY1JKh2lDFXUDKYu7NrY09itfaZYgS5Yvv93xYBm/OyBwpwObUtJasQsfw4p/6+MvgL8QpS/jzprwXExqzVszPGoamMLK/oH/5cY85nHWJQyFhVLKQeJdhJbsJETkKwcKq3Z7cQMA0D5FKu8XWqHYUBCQy1opX3M/+lmqOgaIx6aiZCSFzdFsrScYbBNCHsaYdGva7sP+/GU5zlgWUXFS7N0TwmuXbj3T8+RYJvBOuV1Ie/vj3Il4Pz6r7iH8rh31COYjNNuYpldH4i//IgXZCfGjXSu3keMxp2126KOhZiFm/D2hDfpBmSUEo68KBviehrWWF31Di2+PT1CSR8tuvQxWmI+V4WqrwuJGJvlxIETn00P/tb4sClTw7AxxQDHuFdYoMz7urMh7MgaOgsTal6sD2w6sAK4Kq27PPLFD0Dkkmoyex7ysGiiR5PBLlD+oPg0ESrqR5iS4RPS6uC9vigkOJVyo34CwirnOjyXs/xSaULz4e2RghH63zRalRDnQBLNKBunflz4=
+env:
+  secure: Amust8EJkcQsdbubDY2gyue9lMklYDchI3SA+cS3B/Gydin/mioOYsqbklE/3/pNjhLzKZzO9P032Nr/38lzBF3B0G5z2+xZ9FQXRelJPBZoKFCUvdZl3X6HOq7CnQeCbEmE1sXo8rRkFEX7QMZI8+RpaqM5LmwLzkXR/6CrVqABPAivTvIL6JHMGkdZKHH/p6Z4pPu4Zd7lDo6N637t06v3jGRT/z5dMmqkYKIjTDxHkVfPFpPKpwbeDfEhZnCWfJillY+j4SNHCmHhjKPkKHa4ePF45WMJ6foLl5ZeLbNGPUze5fyUGosOdh9p23ptSekPqTR90rUfk2pi44Nh1td3s1jdr4teBqKjzX/kRbN2qhD8Wtize+TGPyPnUY2Y7+10ZRcz3Xv3q8+VtZyV15htlLkucSCKmdRJnmIUZwMrCnfwRjNfg/OkLTrsYhsgmn4ijCaF6zGLJZYXqbOQULZjXK/KnFwk6/OqPG/ntGATIY7uS6d4UntDM1p2+pJ+jBUxYw9OUBGAFJB5dPRYgYcYRXVlgdrACfPWA0h8R+iOgJSII+cZ6dcFjOSNipJ2rYyY3TNe1qGNMwzb8AhsaJnsKimdesVTPz6YYudu8MRpgvrjkdTdpBgJGM3bdznmbDcHnvbfnxQaZNzqm95QMjplovQ/5k2t/4+JFRY1NHQ=
