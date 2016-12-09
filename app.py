@@ -21,13 +21,13 @@ app.debug = True
 
 slack_token = os.environ.get('SLACK_TOKEN')
 
-if os.environ.get('DEV') is None:
-    try:
-        slack_token = boto3.client('kms').decrypt(
-                            CiphertextBlob=b64decode(slack_token)
-                        )['Plaintext']
-    except:
-        logger.error("Could not decrypt anything, check your environment variables!")
+
+try:
+    slack_token = boto3.client('kms').decrypt(
+                        CiphertextBlob=b64decode(slack_token)
+                    )['Plaintext']
+except:
+    logger.warning("Could not decrypt the slack token")
 
 @app.route('/', methods=['POST'], content_types=['application/x-www-form-urlencoded'])
 def index():
@@ -39,7 +39,7 @@ def index():
     token = body['token'][0]
 
     if token != slack_token:
-        raise ForbiddenError
+        raise ForbiddenError("Invalid token")
 
     if 'text' not in body:
         raise BadRequestError
