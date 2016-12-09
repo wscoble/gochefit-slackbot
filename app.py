@@ -10,21 +10,24 @@ from base64 import b64decode
 from chalice import Chalice, ForbiddenError, BadRequestError
 from chalicelib import commands
 
-with find_dotenv() as de:
-    if de is not None:
-        load_dotenv(de)
+de = find_dotenv()
+if de is not None:
+    load_dotenv(de)
 
 app = Chalice(app_name='gochefit-slackbot')
-logging.getLogger().setLevel(logging.DEBUG)
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
 app.debug = True
 
 slack_token = os.environ.get('SLACK_TOKEN')
 
 if os.environ.get('DEV') is None:
-    slack_token = boto3.client('kms').decrypt(
-                        CiphertextBlob=b64decode(slack_token)
-                    )['Plaintext']
-    logging.getLogger().debug("Slack token: " + slack_token)
+    try:
+        slack_token = boto3.client('kms').decrypt(
+                            CiphertextBlob=b64decode(slack_token)
+                        )['Plaintext']
+    except:
+        logger.error("Could not decrypt anything, check your environment variables!")
 
 @app.route('/', methods=['POST'], content_types=['application/x-www-form-urlencoded'])
 def index():
