@@ -22,12 +22,10 @@ app.debug = True
 slack_token = os.environ.get('SLACK_TOKEN')
 
 
-try:
+if os.environ.get('PROD') is not None:
     slack_token = boto3.client('kms').decrypt(
                         CiphertextBlob=b64decode(slack_token)
                     )['Plaintext']
-except:
-    logger.warning("Could not decrypt the slack token")
 
 @app.route('/', methods=['POST'], content_types=['application/x-www-form-urlencoded'])
 def index():
