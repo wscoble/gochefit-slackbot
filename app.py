@@ -10,7 +10,9 @@ from base64 import b64decode
 from chalice import Chalice, ForbiddenError, BadRequestError
 from chalicelib import commands
 
-load_dotenv(find_dotenv())
+with find_dotenv() as de:
+    if de is not None:
+        load_dotenv(de)
 
 app = Chalice(app_name='gochefit-slackbot')
 logging.getLogger().setLevel(logging.DEBUG)
