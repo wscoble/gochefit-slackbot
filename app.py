@@ -1,31 +1,49 @@
-from chalice import Chalice
+import boto3
+import logging
+import os
+import sys
+import urlparse
+
+from dotenv import load_dotenv, find_dotenv
+from base64 import b64decode
+
+from chalice import Chalice, ForbiddenError, BadRequestError
+from chalicelib import commands
+
+load_dotenv(find_dotenv())
 
 app = Chalice(app_name='gochefit-slackbot')
+logging.getLogger().setLevel(logging.DEBUG)
+app.debug = True
 
+slack_token = os.environ.get('SLACK_TOKEN')
 
-@app.route('/')
+if os.environ.get('DEV') is None:
+    slack_token = boto3.client('kms').decrypt(
+                        CiphertextBlob=b64decode(slack_token)
+                    )['Plaintext']
+    logging.getLogger().debug("Slack token: " + slack_token)
+
+@app.route('/', methods=['POST'], content_types=['application/x-www-form-urlencoded'])
 def index():
-    return {'hello': 'world'}
+    body = urlparse.parse_qs(app.current_request.raw_body)
 
+    if 'token' not in body:
+        raise BadRequestError
 
-# The view function above will return {"hello": "world"}
-# whenver you make an HTTP GET request to '/'.
-#
-# Here are a few more examples:
-#
-# @app.route('/hello/{name}')
-# def hello_name(name):
-#    # '/hello/james' -> {"hello": "james"}
-#    return {'hello': name}
-#
-# @app.route('/users', methods=['POST'])
-# def create_user():
-#     # This is the JSON body the user sent in their POST request.
-#     user_as_json = app.json_body
-#     # Suppose we had some 'db' object that we used to
-#     # read/write from our database.
-#     # user_id = db.create_user(user_as_json)
-#     return {'user_id': user_id}
-#
-# See the README documentation for more examples.
-#
+    token = body['token'][0]
+
+    if token != slack_token:
+        raise ForbiddenError
+
+    if 'text' not in body:
+        raise BadRequestError
+
+    command = body['text'][0]
+
+    result = commands.process_command(command)
+
+    if result is None:
+        raise BadRequestError("No command found!")
+    else:
+        return result

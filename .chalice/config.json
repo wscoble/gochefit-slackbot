@@ -1,4 +1,7 @@
 {
-  "app_name": "gochefit-slackbot", 
-  "stage": "dev"
+  "lambda_arn": "arn:aws:lambda:us-west-2:585411877007:function:gochefit-slackbot",
+  "app_name": "gochefit-slackbot",
+  "stage": "dev",
+  "manage_iam_role": false,
+  "iam_role_arn": "arn:aws:iam::585411877007:role/gochefit-slackbot"
 }

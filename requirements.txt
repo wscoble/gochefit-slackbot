@@ -47,6 +47,7 @@ pytest==2.7.1
 pytest-cov==1.8.1
 pytest-xdist==1.14
 python-dateutil==2.5.3
+python-dotenv==0.6.1
 PyYAML==3.11
 requests==2.12.3
 rsa==3.4.2
