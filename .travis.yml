@@ -6,11 +6,12 @@ script: chalice deploy
 notifications:
   slack:
     on_success: always
-    on_failure: change
+    on_failure: always
     template:
-    - "%{build_url}"
-    - "%{commit_message}"
-    - 'Change view: %{compare_url}'
+      - "https://github.com/%{repository_slug}"
+      - "%{build_url}"
+      - "%{commit_message}"
+      - 'Change view: %{compare_url}'
     rooms:
       secure: Qtd4t342dwowjEsyypGf+DZdoaJEwGirtSBoGQgWEgB/MV4Ex9Rf2UaIeWD18Gd/Pd3dYpu08fcJ5E3ALtR7gmCcmz8GVupkTCGFd7w1cqESNkiJEaDlli1j8wDGGuU1bROuMts2hyj30XF4Y6rqnAth/Up6HMAYY1JKh2lDFXUDKYu7NrY09itfaZYgS5Yvv93xYBm/OyBwpwObUtJasQsfw4p/6+MvgL8QpS/jzprwXExqzVszPGoamMLK/oH/5cY85nHWJQyFhVLKQeJdhJbsJETkKwcKq3Z7cQMA0D5FKu8XWqHYUBCQy1opX3M/+lmqOgaIx6aiZCSFzdFsrScYbBNCHsaYdGva7sP+/GU5zlgWUXFS7N0TwmuXbj3T8+RYJvBOuV1Ie/vj3Il4Pz6r7iH8rh31COYjNNuYpldH4i//IgXZCfGjXSu3keMxp2126KOhZiFm/D2hDfpBmSUEo68KBviehrWWF31Di2+PT1CSR8tuvQxWmI+V4WqrwuJGJvlxIETn00P/tb4sClTw7AxxQDHuFdYoMz7urMh7MgaOgsTal6sD2w6sAK4Kq27PPLFD0Dkkmoyex7ysGiiR5PBLlD+oPg0ESrqR5iS4RPS6uC9vigkOJVyo34CwirnOjyXs/xSaULz4e2RghH63zRalRDnQBLNKBunflz4=
 env:
